@@ -151,18 +151,15 @@ func (s *Stack) Dial(ctx context.Context, dst string) (*tcp.Conn, error) {
 	if ctx == nil {
 		ctx = context.Background()
 	}
-	dialCtx := s.ctx
-	if deadline, ok := ctx.Deadline(); ok {
-		var cancel context.CancelFunc
-		dialCtx, cancel = context.WithDeadline(dialCtx, deadline)
-		defer cancel()
-	}
 	done := make(chan error, 1)
 	go func() { done <- c.WaitEstablished(15 * time.Second) }()
 	select {
-	case <-dialCtx.Done():
+	case <-ctx.Done():
 		_ = c.Close()
-		return nil, dialCtx.Err()
+		return nil, ctx.Err()
+	case <-s.ctx.Done():
+		_ = c.Close()
+		return nil, s.ctx.Err()
 	case err := <-done:
 		if err != nil {
 			return nil, err
