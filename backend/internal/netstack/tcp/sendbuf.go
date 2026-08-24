@@ -47,11 +47,11 @@ func (b *SendBuffer) Write(p []byte) int {
 	if n <= 0 {
 		return 0
 	}
-	if len(b.data) == 0 && n == b.cap {
-		b.data = p[:n:n]
-	} else {
-		b.data = append(b.data, p[:n]...)
-	}
+	// Always copy: the caller may reuse or overwrite p after Write
+	// returns, but data may still be pending in the send buffer
+	// (window-limited).  Aliasing p here would let a later send
+	// read from the caller's mutated buffer, mixing frames.
+	b.data = append(b.data, p[:n]...)
 	return n
 }
 
