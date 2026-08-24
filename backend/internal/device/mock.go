@@ -54,11 +54,11 @@ func (m *Mock) Read(p []byte) (int, error) {
 
 func (m *Mock) Write(p []byte) (int, error) {
 	m.mu.Lock()
-	defer m.mu.Unlock()
-	dead := m.dead
-	if dead {
+	if m.dead {
+		m.mu.Unlock()
 		return 0, errors.New("device closed")
 	}
+	m.mu.Unlock()
 	cp := CopyBuf(p)
 	select {
 	case <-m.ctx.Done():
