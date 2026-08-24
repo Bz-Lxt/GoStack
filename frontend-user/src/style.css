@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html, body, #app {
+  min-height: 100%;
+  background: #05080c;
+}
+
+body {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  color: #9bb0b8;
+}
+
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><polyline points='1,1 6,6 11,1' fill='none' stroke='%23999' stroke-width='1.6'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+.scanlines::after {
+  content: '';
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.015),
+    rgba(255, 255, 255, 0.015) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  z-index: 50;
+}
+
+.hexbg {
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(57, 255, 136, 0.06), transparent 32%),
+    radial-gradient(circle at 80% 0%, rgba(126, 232, 250, 0.05), transparent 28%),
+    linear-gradient(#0c1218, #05080c);
+}
+
+.panel {
+  @apply bg-panel/90 border border-line rounded-xl backdrop-blur-sm;
+  box-shadow: inset 0 0 0 1px rgba(57, 255, 136, 0.04);
+}

@@ -1,0 +1,42 @@
+# Binaries
+/backend/gostack
+/backend/bin/
+*.exe
+*.test
+*.out
+coverage.out
+coverage.html
+
+# Go
+backend/vendor/
+
+# Node
+frontend-user/node_modules/
+frontend-user/dist/
+frontend-user/.vite/
+
+# IDE / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Env / secrets
+.env
+.env.local
+*.pem
+
+# Test caches
+.pytest_cache/
+test-results/
+playwright-report/
+blob-report/
+
+# Alkaid local lock is tracked (empty marker)
+# .alkaid-sop
+/docs/
+/.alkaid-sop
+/CLAUDE.md
+/AGENTS.md
+/.cursorrules
+/.github/
