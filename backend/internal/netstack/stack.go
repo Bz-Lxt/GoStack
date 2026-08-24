@@ -153,10 +153,11 @@ func (s *Stack) Dial(ctx context.Context, dst string) (*tcp.Conn, error) {
 	}
 	done := make(chan error, 1)
 	go func() {
-		if err := c.WaitEstablished(15 * time.Second); err != nil {
-			logger.Guard().Warn("tcp dial", "err", err)
+		werr := c.WaitEstablished(15 * time.Second)
+		if werr != nil {
+			logger.Guard().Warn("tcp dial", "err", werr)
 		}
-		done <- err
+		done <- werr
 	}()
 	select {
 	case <-ctx.Done():
